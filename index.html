@@ -1,7 +1,30 @@
-<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>For Yashika</title><link rel="stylesheet" href="style.css"/></head><body>
-<div id="envelopeOverlay" role="button" tabindex="0"><div class="envelope"><div class="flap"></div><div class="body"><div class="label"><div class="to">For</div><div class="name">Yashika</div></div><div class="tap">Tap to continue</div></div></div></div>
-<div id="garden"></div>
-<div id="message"><div class="card"><p class="line1">Hope this makes you smile</p><p class="line2">just wanted to make your day</p></div></div>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>For Yashika</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="tapScreen" role="button" tabindex="0">Tap Anywhere 💗</div>
+
+<div id="garden" aria-hidden="false"></div>
+
+<div id="message" role="status" aria-live="polite">
+  <div class="card">
+    <p class="line1">Hope this makes you smile</p>
+    <p class="line2">just wanted to make your day</p>
+  </div>
+</div>
+
 <audio id="bgMusic" src="song.mp3"></audio>
-<div id="petals"></div><div id="butterflies"></div><div id="hearts"></div><div id="confetti"></div>
-<script src="script.js"></script></body></html>
+
+<div id="petals" aria-hidden="true"></div>
+<div id="butterflies" aria-hidden="true"></div>
+<div id="hearts" aria-hidden="true"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
