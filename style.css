@@ -1,159 +1,117 @@
 
-/* Base + background fade */
 :root{
-  --bg1: #fdf6ff;
-  --bg2: #fff8fb;
-  --accent: #ffd6e0;
-  --text: #5b4b5b;
-  --petal1: #ffd1dc;
-  --petal2: #f0d6ff;
-  --petal3: #eaf6ff;
-  --stem: #6ec17d;
+  --bg1: #fff4fb;
+  --bg2: #fffefc;
+  --stem: #4fbf7a;
+  --bright1: #ff7fb8;
+  --bright2: #ffd166;
+  --bright3: #79d1ff;
 }
-
 *{box-sizing:border-box}
-body {
-  margin: 0;
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  font-family: 'Poppins', system-ui, -apple-system, 'Helvetica Neue', Arial;
-  user-select: none;
-  background: linear-gradient(180deg, var(--bg1), var(--bg2));
-  animation: bgFade 14s ease-in-out infinite alternate;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
+html,body{height:100%}
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  font-family:'Poppins',system-ui,Arial;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  background: linear-gradient(180deg,var(--bg1),var(--bg2));
+  animation: bgFade 12s ease-in-out infinite alternate;
 }
 
-@keyframes bgFade {
-  0%   { background: linear-gradient(180deg, #fbf6ff, #fff7fb); }
-  50%  { background: linear-gradient(180deg, #fff1fb, #fffefc); }
-  100% { background: linear-gradient(180deg, #fff8ff, #fff7fb); }
-}
-
-/* Tap overlay */
-#tapScreen{
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 26px;
-  color: #a86fba;
-  background: rgba(255,255,255,0.75);
-  padding: 18px 26px;
-  border-radius: 18px;
-  cursor: pointer;
-  z-index: 60;
-  box-shadow: 0 8px 30px rgba(114,76,128,0.08);
+/* background fade */
+@keyframes bgFade{
+  0%{ background: linear-gradient(180deg,#fff4fb,#fffefc); }
+  50%{ background: linear-gradient(180deg,#fff1f8,#fffefb); }
+  100%{ background: linear-gradient(180deg,#fff7ff,#fffefc); }
 }
 
 /* Garden */
-#garden {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  position: absolute;
-  bottom: 0;
-  opacity: 0;
+#garden{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  position:absolute;
+  bottom:0;
+  opacity:0;
   transition: opacity 1s ease;
-  z-index: 10;
+  z-index:10;
 }
 
 /* Flower */
-.flower {
-  width: 60px;
-  margin: 0 10px;
-  position: relative;
-  display: flex;
-  flex-direction: column-reverse; /* stem grows upward visually */
-  align-items: center;
-  will-change: transform, opacity;
+.flower{
+  width:70px;
+  margin:0 10px;
+  position:relative;
+  display:flex;
+  flex-direction:column-reverse;
+  align-items:center;
+}
+.stem{
+  width:6px;
+  height:0;
+  background: linear-gradient(180deg,var(--stem),#2f9a5f);
+  border-radius:4px;
+  box-shadow: 0 6px 12px rgba(80,140,90,0.08);
+  transition: height 1.2s cubic-bezier(.2,.9,.2,1);
 }
 
-/* Stem */
-.stem {
-  width: 6px;
-  height: 0;
-  background: linear-gradient(180deg, var(--stem), #4f9a5f);
-  border-radius: 4px;
-  animation: stemGrow 3s cubic-bezier(.2,.9,.2,1) forwards;
-  box-shadow: 0 6px 10px rgba(80,140,90,0.06);
+/* brighter petals */
+.petal{
+  position:absolute;
+  bottom:320px;
+  width:28px;
+  height:28px;
+  border-radius:50% 60% 50% 60%;
+  opacity:0;
+  transform-origin:center;
+  box-shadow: 0 10px 26px rgba(90,60,90,0.08);
 }
+.petal.layer1{ background: linear-gradient(120deg,var(--bright1),#ff9ccf 60%); transform: translate(-14px,-10px) rotate(-12deg); }
+.petal.layer2{ background: linear-gradient(120deg,var(--bright2),#ffd98a 60%); transform: translate(14px,-10px) rotate(16deg); }
+.petal.layer3{ background: linear-gradient(120deg,var(--bright3),#9fdfff 60%); transform: translate(-6px,12px) rotate(-8deg); }
+.petal.layer4{ background: linear-gradient(120deg,#ffd1a6,#ffbfe0 60%); transform: translate(10px,14px) rotate(20deg); }
+.petal.center{ width:24px; height:24px; background: #fff3d9; left:50%; transform: translateX(-50%) translateY(-8px); border-radius:50%; box-shadow: inset 0 -4px 8px rgba(0,0,0,0.06); opacity:0; }
 
-/* Petal layers (mixed A+B) */
-.petal {
-  position: absolute;
-  bottom: var(--stem-height, 280px);
-  width: 26px;
-  height: 26px;
-  border-radius: 50% 60% 50% 60%;
-  opacity: 0;
-  transform-origin: center;
-  animation: petalBloom 1.6s ease forwards 1.6s;
-  box-shadow: 0 8px 22px rgba(91,75,91,0.08);
-}
-
-.petal.layer1{ background: linear-gradient(120deg, var(--petal1), #ffd9e6 60%); transform: translate(-12px, -8px) rotate(-10deg); }
-.petal.layer2{ background: linear-gradient(120deg, var(--petal2), #e6f9ff 60%); transform: translate(12px, -8px) rotate(14deg); }
-.petal.layer3{ background: linear-gradient(120deg, var(--petal3), #fff4cc 60%); transform: translate(-4px, 10px) rotate(-6deg); }
-.petal.layer4{ background: linear-gradient(120deg, var(--petal1), #ffe1f0 60%); transform: translate(8px, 12px) rotate(22deg); }
-.petal.center{ width: 22px; height: 22px; background: #ffe9d6; left: 50%; transform: translateX(-50%) translateY(-8px); border-radius:50%; box-shadow: inset 0 -4px 8px rgba(0,0,0,0.06); opacity:0; animation: petalBloom 1.6s ease forwards 1.8s; }
-
-@keyframes stemGrow{ to { height: 320px; } }
 @keyframes petalBloom{ to { opacity:1; transform: translateY(0) scale(1); } }
 
 /* Message card */
-#message{ position: absolute; top: 20%; width:100%; display:flex; justify-content:center; pointer-events:none; z-index:50; opacity:0; transition: opacity 400ms ease; }
-#message .card{ background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85)); padding:22px 28px; border-radius:18px; box-shadow: 0 12px 40px rgba(114,76,128,0.08); color:#5a3e63; text-align:center; width: min(86%, 520px); }
-#message .line1{ font-size:20px; font-weight:700; margin:0 0 6px 0; }
-#message .line2{ margin:0; font-size:14px; color:#7b5a7b; }
+#message{ position:absolute; top:22%; width:100%; display:flex; justify-content:center; pointer-events:none; z-index:50; opacity:0; transition: opacity 400ms ease; }
+#message .card{ background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9)); padding:22px 28px; border-radius:18px; box-shadow: 0 12px 40px rgba(120,80,140,0.08); color:#4b2f52; text-align:center; width: min(86%,520px); }
+#message .line1{ font-size:22px; font-weight:700; margin:0 0 8px 0; }
+#message .line2{ margin:0; font-size:16px; color:#6e4b6e; }
 
-/* Petals falling */
-#petals{ position: fixed; inset:0; pointer-events:none; z-index:20; overflow:hidden; }
-.petalFall{ position:absolute; top:-20px; border-radius:50%; filter: blur(1px); opacity:0.9; animation: fall 6s linear forwards; }
+/* petals falling */
+#petals{ position:fixed; inset:0; pointer-events:none; z-index:20; overflow:hidden; }
+.petalFall{ position:absolute; top:-20px; border-radius:50%; filter: blur(1px); opacity:0.95; animation: fall 6s linear forwards; }
 @keyframes fall{ to { transform: translateY(120vh) translateX(40px) rotate(30deg); opacity:0; } }
 
-/* Sparkles */
-.sparkle{ position: fixed; width:6px; height:6px; background:#fff; border-radius:50%; filter: blur(1px); opacity:0; animation: twinkle 3s linear forwards; z-index:55; }
-@keyframes twinkle{ 0%{ transform:scale(0.3); opacity:0 } 50%{ transform:scale(1.6); opacity:1 } 100%{ transform:scale(0); opacity:0 } }
+/* sparkles */
+.sparkle{ position:fixed; width:6px; height:6px; background:#fff; border-radius:50%; filter:blur(1px); opacity:0; animation: twinkle 3s linear forwards; z-index:55; }
+@keyframes twinkle{ 0%{ transform: scale(0.3); opacity:0 } 50%{ transform: scale(1.6); opacity:1 } 100%{ transform: scale(0); opacity:0 } }
 
-/* Butterflies (Realistic Soft) */
-#butterflies{ position: fixed; inset:0; pointer-events:none; z-index:45; overflow:visible; }
-.butterfly{
-  position:absolute;
-  width: 40px;
-  height: 26px;
-  opacity: 0.9;
-  transform-origin:center;
-  filter: drop-shadow(0 6px 12px rgba(120,80,120,0.08));
-  transition: transform 0.3s linear;
-}
-.butterfly .wing{ position:absolute; width:50%; height:100%; top:0; border-radius:50%; background: linear-gradient(180deg, rgba(255,200,240,0.9), rgba(230,230,255,0.8)); opacity:0.95; }
+/* butterflies */
+#butterflies{ position:fixed; inset:0; pointer-events:none; z-index:45; overflow:visible; }
+.butterfly{ position:absolute; width:44px; height:30px; opacity:0.95; transform-origin:center; filter: drop-shadow(0 6px 12px rgba(120,80,120,0.08)); transition: transform .3s linear; }
+.butterfly .wing{ position:absolute; width:50%; height:100%; top:0; border-radius:50%; background: linear-gradient(180deg, rgba(255,200,240,0.95), rgba(230,230,255,0.9)); opacity:0.95; }
 .butterfly .wing.left{ left:0; transform-origin:right center; }
 .butterfly .wing.right{ right:0; transform-origin:left center; }
 
-/* subtle flutter */
-@keyframes flutter1{ 0%{ transform: rotate(-6deg) } 50%{ transform: rotate(6deg) } 100%{ transform: rotate(-6deg) } }
-@keyframes drift1{ 0%{ transform: translate(-10px,20vh) } 100%{ transform: translate(110vw,-40vh) } }
-
-/* Hearts (soft floating heart glow) */
-#hearts{ position: fixed; inset:0; pointer-events:none; z-index:48; overflow:visible; }
-.heartGlow{ position:absolute; width:22px; height:22px; transform: rotate(-45deg); opacity:0.9; filter: blur(0.5px); }
+/* hearts */
+#hearts{ position:fixed; inset:0; pointer-events:none; z-index:48; overflow:visible; }
+.heartGlow{ position:absolute; width:22px; height:22px; transform: rotate(-45deg); opacity:0.95; filter: blur(0.5px); }
 .heartGlow::before, .heartGlow::after{ content:''; position:absolute; width:22px; height:22px; background: linear-gradient(180deg,#ffc6df,#ff90c1); border-radius:50%; }
 .heartGlow::before{ top:-11px; left:0; }
 .heartGlow::after{ left:11px; top:0; }
-
 @keyframes heartFloat{ 0%{ transform: translateY(0) scale(0.8); opacity:0.95 } 100%{ transform: translateY(-180px) scale(1.1); opacity:0 } }
 
-/* small responsive tweaks */
+/* responsive tweaks */
 @media (max-width:480px){
-  .flower{ width:42px; margin:0 6px }
-  .petal{ width:18px; height:18px; bottom:220px }
-  .stem{ width:4px }
-  .butterfly{ width:32px; height:20px }
-  #tapScreen{ font-size:20px; padding:14px 20px }
-  #message .card{ padding:16px 18px; font-size:15px }
+  .flower{ width:54px; margin:0 6px; }
+  .petal{ width:20px; height:20px; bottom:220px; }
+  .butterfly{ width:34px; height:22px; }
+  #message .card{ padding:16px 18px; font-size:15px; }
 }
